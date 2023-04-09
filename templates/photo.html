@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Photo Browser</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='pictures_flask_blog.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</head>
+<body>
+    <div class="container h-100">
+        <div class="title">
+            <h1>Picture {{ current_index + 1 }} from {{ total_photos }}</h1>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-12 col-md-8 col-lg-6 photo-container">
+                <img src="{{ img_src }}" alt="Photo" class="img-fluid">
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="sidebar">
+                    <h4>Other pictures:</h4>
+                    <div class="menu-photos photo-menu">
+                        {% for i in range(total_photos) %}
+                            {% if i == current_index %}
+                                <strong>Picture {{ i + 1 }}</strong><br>
+                            {% else %}
+                                <a href="/pic/{{ i }}">Picture {{ i + 1 }}</a><br>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{img_data["text"]}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{img_data["date"]}}</h6>
+                <p class="card-text">{{img_data["html"] | safe}}</p>
+              </div>
+        </div>
+        <div class="row justify-content-center fixed-bottom">
+            <div class="col-auto">
+                {% if current_index > 0 %}
+                    <a href="/pic/{{ current_index - 1 }}" class="btn btn-primary">Previous</a>
+                {% endif %}
+            </div>
+            <div class="col-auto">
+                {% if current_index < total_photos - 1 %}
+                    <a href="/pic/{{ current_index + 1 }}" class="btn btn-primary">Next</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

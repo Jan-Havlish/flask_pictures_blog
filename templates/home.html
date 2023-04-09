@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="30;url=/pic/" />
+  <link rel="shortcut icon" href="{{ url_for('static', filename='pictures_flask_blog.ico') }}" type="image/x-icon">
+  <!-- Připojení Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Flask picture blog</title>
+</head>
+
+<body>
+  <div class="container-fluid" style="background-color: #007bff; padding: 20px;">
+    <h1 class="text-center text-white">Flask picture blog</h1>
+  </div>
+  <div class="container" style="padding-top: 50px;">
+    <div class="row">
+      <div class="col-md-12">
+        <p class="text-center">
+          This project is a simple Blog for sharing images.
+        </p>
+          <ul>
+            <li>Each image can have a text description and additional html tags. The date of publication is also displayed. </li>
+            <li>Images can be added to the blog with use of save_photo.py script. This script need args. In this time this script can only work with images stored in same folder as script.</li>
+            <li>Example of using the script: "python3 save_photo.py a.jpg b.png c.jpg</li>
+            <li>This time the blog can display only .jpg or .png photos but is easy to add support for photos of other formats.</li>
+            <li>Pictures added to the "pic" folder will be displayed without additional information.</li>
+            <li>Pictures removed from the "pic" folder will no longer be displayed.</li>
+          </ul>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

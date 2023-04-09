@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Připojení Bootstrap CSS -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='pictures_flask_blog.ico') }}" type="image/x-icon">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .container-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  </style>
+  <title>Flask picture blog - 404 error</title>
+</head>
+
+<body>
+  <div class="container-center text-center">
+    <div>
+      <img src="{{ url_for('static', filename='404.png') }}" alt="404 image" class="img-fluid">
+      <p class="mt-4">This page does not exist.</p>
+    </div>
+  </div>
+</body>
+
+</html>
