@@ -1,10 +1,12 @@
 from flask import render_template, abort, redirect, url_for
 from __init__ import app, db_handler, photo_loader_instance
-from funcions_for_routes import try_to_load_json
+from funcions_for_routes import try_to_load_json, update_loader
+
 
 @app.route("/")
 @app.route("/home/")
 def houme():
+    update_loader()
     return render_template("home.html")
 
 @app.route("/pic/")

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="30;url=/pic/" />
+  <meta http-equiv="refresh" content="60;url=/pic/" />
   <link rel="shortcut icon" href="{{ url_for('static', filename='pictures_flask_blog.ico') }}" type="image/x-icon">
   <!-- Připojení Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -28,6 +28,10 @@
             <li>This time the blog can display only .jpg or .png photos but is easy to add support for photos of other formats.</li>
             <li>Pictures added to the "pic" folder will be displayed without additional information.</li>
             <li>Pictures removed from the "pic" folder will no longer be displayed.</li>
+            <li>
+              <strong> After 60s you will be redirected to blog app.</strong>
+            </li>
+            <li> This app contain 4 example files (a.jpg, b.jpg, c.jpg, data.db) and folder pic (stored in static). You can remove this files when you like (before you add own records).</li>
           </ul>
       </div>
     </div>
