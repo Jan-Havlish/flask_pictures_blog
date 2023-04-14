@@ -16,6 +16,13 @@ support for photos of other formats.
 without additional information and with an error message.
   - Pictures removed from the "pic" folder will no longer be displayed.
 
+## Install
+1) Copy projects file to directory that you want
+2)  **Optional** - Create and setup virtual environment
+3) In the main folder of this project run: pip install -r requirements.txt in a terminal
+4) Change what do you want
+5) Run the run.py script: python run.py
+
 ## Using of the *save_photo.py* script
 
 - This script is only one right way to save pub images to blog in this time.
