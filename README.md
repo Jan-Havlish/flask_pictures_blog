@@ -37,7 +37,9 @@ image and for additional html tags (unnecessary)
 
 ## Acknowledgments
 
-Thanks to ChatGPT in particular for "explaining error messages", examples of working
+- Thanks to Bootstrap for their CSS
+
+- Thanks to ChatGPT in particular for "explaining error messages", examples of working
 with some libraries, and for the JS code, as I needed some JS but haven't learned it 
 much yet.
 
