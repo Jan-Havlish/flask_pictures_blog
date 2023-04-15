@@ -1,5 +1,5 @@
 from flask import render_template, abort, redirect, url_for
-from __init__ import app, db_handler, photo_loader_instance
+from __init__ import app, db_handler
 from funcions_for_routes import try_to_load_json, update_loader
 
 
@@ -16,10 +16,12 @@ def redirect_to_first_pic():
 @app.route("/pic/<int:pic_num>")
 def pic(pic_num):
 
-    total_photos = len(photo_loader_instance) # protection against accessing a non exiting photo
+    records = db_handler.get_all()
+
+    total_photos = len(records) # protection against accessing a non exiting photo
     if pic_num < 0 or pic_num >= total_photos:
         abort(404)
-    name_of_img = photo_loader_instance[pic_num]
+    name_of_img = records[pic_num]
     img_src = f"/static/pic/{name_of_img}" # source of picture
     img_data = db_handler.get(name_of_img) # get record of the picture
     dictionary_of_one_img = try_to_load_json(img_data, "Error - record of this picture was not found")

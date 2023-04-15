@@ -29,4 +29,4 @@ class PickleDBHandler:
         """
         Return all records in db.
         """
-        return self.db.getall()
+        return list(self.db.getall())
