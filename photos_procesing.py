@@ -13,13 +13,13 @@ class photo_loader:
         # Sort file names by the numeric string at the beginning of the name (if any)
         sorted_names = sorted(file_names, key=lambda x: (
         int(''.join(filter(str.isdigit, x))) if x[0].isdigit() else float('inf'), x))
-
+        # Definition of types of images to show.
+        extensions = [".jpg", ".png", ".gif"]
         # Add photo names to the list
         for file_name in sorted_names:
-            if file_name.endswith('.jpg'):
-                self.photo_names.append(file_name)
-            elif file_name.endswith('.png'):
-                self.photo_names.append(file_name)
+            for extension in extensions:
+                if file_name.endswith(extension):
+                    self.photo_names.append(file_name)
 
     def __len__(self):
         return len(self.photo_names)

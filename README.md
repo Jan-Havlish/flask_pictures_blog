@@ -10,7 +10,7 @@ This project is a simple Blog for sharing images.
   - This script need args.
   - In this time this script can only work with images stored in same folder as script.
     Example of using the script: "python3 save_photo.py a.jpg b.png c.jpg
-    - This time the blog can display only .jpg or .png photos but is easy to add 
+    - This time the blog can display only .jpg or .png and .gif photos but is easy to add 
 support for photos of other formats.
   - Pictures added to the "pic" folder without usage of this script will be displayed 
 without additional information and with an error message.
