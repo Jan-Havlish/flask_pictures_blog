@@ -1,6 +1,6 @@
 from flask import render_template, abort, redirect, url_for
 from __init__ import app, db_handler
-from funcions_for_routes import try_to_load_json
+from funcions_not_only_for_routes import try_to_load_json
 
 
 @app.route("/")
