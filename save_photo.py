@@ -22,6 +22,6 @@ def save_photos(images):
 
     print("Done")
 
-
+# storing_object = save_photos_to_db_and_copy_them({"name_of_photo": image, "description_of_photo": text, "additional_html_tags": html}, "static/pic/")
 if __name__ == '__main__':
     save_photos()

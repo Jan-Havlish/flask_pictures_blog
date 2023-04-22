@@ -20,10 +20,14 @@ def try_to_load_json(JSON,
 class save_photos_to_db_and_copy_them:
     """Save records to db, and copy photos"""
 
-    def __init__(self, list_of_records, output_directory):
+    def __init__(self, list_of_records, output_directory, db):
         self.records = list_of_records
         self.images = self.make_list_of_images()
         self.output_dir = output_directory  # "static/pic/"  # folder for images
+        if db:
+            self.db = db
+        else:
+            self.db = pickledb.load(self.DB_PATH, False)
         self.DB_PATH = "data.db"  # path to db file
         self.save_data()
 
@@ -62,7 +66,7 @@ class save_photos_to_db_and_copy_them:
                 not_copied_images.append(image)
 
         # adding correct records to the db
-        db = pickledb.load(self.DB_PATH, False)
+        db = self.db
 
         for i in range(len(self.images)):
             if self.images[i] in not_copied_images:
@@ -73,3 +77,18 @@ class save_photos_to_db_and_copy_them:
             # print(f"The record for the {key} was successfully added to db.")
 
         db.dump()  # save db
+
+
+class config:
+    def __init__(self, name_of_conf_file):
+        self.conf_file = name_of_conf_file
+        self.config_JSON = {}
+        self.load()
+
+    def load(self):
+        with open(self.conf_file) as file:
+            json_to_load = file.readline()  # json.loads()
+            self.config_JSON = json.loads(json_to_load)
+
+    def __getitem__(self, key):
+        return self.config_JSON[key]

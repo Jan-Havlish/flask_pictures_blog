@@ -1,6 +1,13 @@
-from flask import render_template, abort, redirect, url_for
-from __init__ import app, db_handler
-from funcions_not_only_for_routes import try_to_load_json
+from flask import render_template, abort, request, redirect, url_for, flash
+from __init__ import app, db_handler, ALLOWED_EXTENSIONS, config_object
+from funcions_not_only_for_routes import try_to_load_json, save_photos_to_db_and_copy_them
+from werkzeug.utils import secure_filename
+import os
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
 @app.route("/")
@@ -29,6 +36,50 @@ def pic(pic_num):
                            img_data=dictionary_of_one_img)
 
 
+# Získání cesty ke složce, ve které je spouštěný skript
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+
+# Funkce pro kontrolu povolených přípon souborů
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+# Route pro nahrávání souborů
+@app.route("/upload", methods=["GET", "POST"])
+def upload_file():
+    if config_object["enable_not_finished_functions"] == False:
+        return '<H1> Only in unfinished version </H1> <br> <H2> For turning on this function change "config.txt"'
+    if request.method == "POST":
+        if "image" not in request.files:
+            flash("No file part")
+            return redirect(request.url)
+        file = request.files["image"]
+        if file.filename == "":
+            flash("No selected file")
+            return redirect(request.url)
+        if not allowed_file(file.filename):
+            flash("Invalid file extension")
+            return redirect(request.url)
+
+        # loading from the form
+        description = request.form["description"]
+        html_tags = request.form.get("html_tags", "")
+
+        # creation of file name and saving
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+        storing_object = save_photos_to_db_and_copy_them(
+            [{"name_of_photo": f"uploads/{filename}", "description_of_photo": description,
+              "additional_html_tags": html_tags}],
+            "static/pic/",
+            db=db_handler.db)
+
+        return redirect(url_for("upload_file", filename=filename))
+    return render_template("upload.html")
+
+
 @app.errorhandler(404)  # funcion for error 404 page
 def page_not_found(error):
-    return render_template('404.html'), 404
+    return render_template("404.html"), 404
