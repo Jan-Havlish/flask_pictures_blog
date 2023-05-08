@@ -1,1 +1,1 @@
-{"enable_not_finished_functions": false, "clear_slate": "not_working"}
+{"enable_not_finished_functions": true, "clear_slate": "not_working", "login_password" : "pasword"}

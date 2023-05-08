@@ -1,16 +1,13 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-</head>
-<body>
-<h1>Upload of blog post</h1>
+{% extends 'base.html' %}
+
+{% block main %}
+
 <form method="POST" enctype="multipart/form-data">
-    <input type="file" name="image">
+    <h1>Upload of blog post</h1>
+    <br> <input type="file" name="image">
     <br> Description: <input type="text" name="description" required>
     <br> Adional HTML tags: <input type="text" name="html_tags">
     <br> <input type="submit" value="Upload">
 </form>
 
-</body>
-</html>
+{% endblock %}

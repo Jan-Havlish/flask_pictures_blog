@@ -1,19 +1,24 @@
+from flask_login import login_required, logout_user
+from flask_login import login_user
+from werkzeug.security import check_password_hash
 from flask import render_template, abort, request, redirect, url_for, flash
-from __init__ import app, db_handler, ALLOWED_EXTENSIONS, config_object
-from funcions_not_only_for_routes import try_to_load_json, save_photos_to_db_and_copy_them
+from __init__ import app, db_handler, config_object, ALLOWED_EXTENSIONS, login_manager
+from funcions_not_only_for_routes import try_to_load_json, save_photos_to_db_and_copy_them, allowed_file, find_user, \
+    User
 from werkzeug.utils import secure_filename
 import os
 
 
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+# load user by ID
+@login_manager.user_loader
+def load_user(user_id):
+    return User(user_id)
 
 
 @app.route("/")
 @app.route("/home/")
 def houme():
-    return render_template("home.html")
+    return render_template("home.html", page="home")
 
 
 @app.route("/pic/")
@@ -33,20 +38,15 @@ def pic(pic_num):
     img_data = db_handler.get(name_of_img)  # get record of the picture
     dictionary_of_one_img = try_to_load_json(img_data, "Error - record of this picture was not found")
     return render_template('photo.html', img_src=img_src, current_index=pic_num, total_photos=total_photos,
-                           img_data=dictionary_of_one_img)
+                           img_data=dictionary_of_one_img, page="pic")
 
 
 # Získání cesty ke složce, ve které je spouštěný skript
-current_dir = os.path.dirname(os.path.abspath(__file__))
-
-
-# Funkce pro kontrolu povolených přípon souborů
-def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
+# current_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Route pro nahrávání souborů
 @app.route("/upload", methods=["GET", "POST"])
+@login_required
 def upload_file():
     if config_object["enable_not_finished_functions"] == False:
         return '<H1> Only in unfinished version </H1> <br> <H2> For turning on this function change "config.txt"'
@@ -58,7 +58,7 @@ def upload_file():
         if file.filename == "":
             flash("No selected file")
             return redirect(request.url)
-        if not allowed_file(file.filename):
+        if not allowed_file(file.filename, ALLOWED_EXTENSIONS):
             flash("Invalid file extension")
             return redirect(request.url)
 
@@ -77,7 +77,41 @@ def upload_file():
             db=db_handler.db)
 
         return redirect(url_for("upload_file", filename=filename))
-    return render_template("upload.html")
+    return render_template("upload.html", page="upload")
+
+
+@app.route("/about/")
+def about():
+    return render_template("home.html", page="about")
+
+
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        user = find_user(username)
+
+        if not user or not check_password_hash(user.password, password):
+            return render_template('login.html', error=True)
+
+        login_user(user)
+        return redirect(url_for('upload_file'))
+    return render_template('login.html', error=False, page="login")
+
+
+@app.route('/logout/')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('houme'))
+
+
+@app.route('/only/')
+@login_required
+def only():
+    return "logined"
 
 
 @app.errorhandler(404)  # funcion for error 404 page

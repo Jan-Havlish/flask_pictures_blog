@@ -1,33 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="30;url=/pic/"/>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='pictures_flask_blog.ico') }}" type="image/x-icon">
-    <!-- Připojení Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Flask picture blog</title>
-</head>
+{% block main %}
 
-<body>
-<div class="container-fluid" style="background-color: #007bff; padding: 20px;">
-    <h1 class="text-center text-white">Flask picture blog</h1>
-</div>
-<div class="container" style="padding-top: 50px;">
-    <div class="row">
-        <div class="col-md-12">
+<div class="col-md-12">
             <p class="text-center">
                 This project is a simple Blog for sharing images.
             </p>
             <h2> For more information please read my README file on my <a
                     href="https://github.com/Jan-Havlish/flask_pictures_blog/blob/master/README.md">GitHub</a>. </h2>
-            <h3> After 30 second you will be redirected to app's route.</h3>
         </div>
-    </div>
-</div>
 
-</body>
-
-</html>
+{% endblock %}

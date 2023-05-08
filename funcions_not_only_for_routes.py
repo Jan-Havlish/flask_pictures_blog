@@ -4,6 +4,8 @@ import json
 import pickledb
 from PIL import Image
 from datetime import datetime
+from password_and_user import users
+from flask_login import UserMixin
 
 
 def try_to_load_json(JSON,
@@ -48,8 +50,6 @@ class save_photos_to_db_and_copy_them:
             date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             processed_data.append({"text": text, "html": html, "date": date})
 
-        # print(f"processed_data: {processed_data}")
-
         # copying images to a folder
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
@@ -92,3 +92,25 @@ class config:
 
     def __getitem__(self, key):
         return self.config_JSON[key]
+
+
+# control extensions
+def allowed_file(filename, EXTENSIONS):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in EXTENSIONS
+
+
+class User(UserMixin):
+    def __init__(self, username):
+        self.id = username
+        self.password = users.get(username).get('password')
+        self.username = username
+
+    def __repr__(self):
+        return f'<User {self.username}>'
+
+
+# find user
+def find_user(username):
+    if username in users:
+        return User(username)
+    return None

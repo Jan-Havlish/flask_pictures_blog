@@ -12,7 +12,10 @@ This project is a simple Blog for sharing images.
     Example of using the script: "python3 save_photo.py a.jpg b.png c.jpg d.bmp
     - This time the blog can display any standard types of photos (.jpg, .png, .bmp and 
 more)
-
+- Or after log in in web interface
+  - Default username: "user"
+  - Default password: "flask"
+  - changeable in "password_and_user.py"
 ## Install
 1) Copy projects file to directory that you want
 2)  **Optional** - Create and setup virtual environment

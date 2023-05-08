@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Photo Browser</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='pictures_flask_blog.ico') }}" type="image/x-icon">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block main %}
 <div class="container h-100">
-    <div class="title">
-        <h1>Picture {{ current_index + 1 }} from {{ total_photos }}</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="bg-info text-white p-3 rounded">
+                    <div class="title">
+                        <h2>Picture {{ current_index + 1 }} from {{ total_photos }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row justify-content-center mt-4">
         <div class="col-12 col-md-8 col-lg-6 photo-container">
@@ -52,5 +52,4 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+{% endblock %}
