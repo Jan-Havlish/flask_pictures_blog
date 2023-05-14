@@ -13,7 +13,7 @@ This project is a simple Blog for sharing images.
     - This time the blog can display any standard types of photos (.jpg, .png, .bmp and 
 more)
 - Or after log in in web interface
-  - Default username: "user"
+  - Default username: "blog"
   - Default password: "flask"
   - changeable in "password_and_user.py"
 ## Install

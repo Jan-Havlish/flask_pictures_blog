@@ -1,4 +1,3 @@
-import json
 import os
 import json
 import pickledb
@@ -19,7 +18,7 @@ def try_to_load_json(JSON,
     return true_json
 
 
-class save_photos_to_db_and_copy_them:
+class SavePhotosToDbAndCopyThem:  # save_photos_to_db_and_copy_them
     """Save records to db, and copy photos"""
 
     def __init__(self, list_of_records, output_directory, db):
@@ -29,8 +28,8 @@ class save_photos_to_db_and_copy_them:
         if db:
             self.db = db
         else:
+            self.DB_PATH = "data.db"  # path to db file
             self.db = pickledb.load(self.DB_PATH, False)
-        self.DB_PATH = "data.db"  # path to db file
         self.save_data()
 
     def make_list_of_images(self):
@@ -62,8 +61,8 @@ class save_photos_to_db_and_copy_them:
                     img.save(output_path)
                     # print(f"File {image} was successfully copied to {output_path}")
             except:
-                # print(f"Error when copying a file {image}.")
                 not_copied_images.append(image)
+                # print(f"Error when copying a file {image}.")
 
         # adding correct records to the db
         db = self.db
@@ -79,7 +78,7 @@ class save_photos_to_db_and_copy_them:
         db.dump()  # save db
 
 
-class config:
+class LoadConfig:
     def __init__(self, name_of_conf_file):
         self.conf_file = name_of_conf_file
         self.config_JSON = {}

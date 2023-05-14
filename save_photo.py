@@ -1,5 +1,5 @@
 import click
-from funcions_not_only_for_routes import save_photos_to_db_and_copy_them
+from funcions_not_only_for_routes import SavePhotosToDbAndCopyThem
 
 @click.command()
 @click.argument('images', metavar='image', type=click.Path(exists=True), nargs=-1)
@@ -17,7 +17,7 @@ def save_photos(images):
         entries.append({"name_of_photo": image, "description_of_photo": text, "additional_html_tags": html})
     print(f"from input: {entries}")
 
-    storing_object = save_photos_to_db_and_copy_them(entries, "static/pic/")
+    storing_object = SavePhotosToDbAndCopyThem(entries, "static/pic/")
 
     print("Done")
 

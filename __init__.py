@@ -1,10 +1,10 @@
 from flask import Flask
 from db_handler import PickleDBHandler
 import os
-from funcions_not_only_for_routes import config
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from funcions_not_only_for_routes import LoadConfig
+from flask_login import LoginManager
 
-config_object = config("config.txt")
+config_object = LoadConfig("config.txt")
 
 app = Flask(__name__, static_url_path="/static", )  # make app object for Flask
 app.config["SECRET_KEY"] = "secret_key"
@@ -23,4 +23,5 @@ app.config["UPLOAD_FOLDER"] = os.path.join(current_dir, "uploads")
 if not os.path.exists(app.config["UPLOAD_FOLDER"]):
     os.makedirs(app.config["UPLOAD_FOLDER"])
 os.chmod("uploads", 0o7777)
-ALLOWED_EXTENSIONS = {"txt", "pdf", "png", "jpg", "jpeg", "gif"}  # alloved extensions
+
+ALLOWED_EXTENSIONS = {"txt", "pdf", "png", "jpg", "jpeg", "gif"}  # allowed extensions

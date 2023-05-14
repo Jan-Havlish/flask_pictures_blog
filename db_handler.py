@@ -21,7 +21,7 @@ class PickleDBHandler:
 
     def delete(self, key):
         """
-        Delate record with specific key.
+        Delete record with specific key.
         """
         self.db.rem(key)
         self.db.dump()
