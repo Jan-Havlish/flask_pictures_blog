@@ -1,7 +1,7 @@
 from flask import Flask
 from db_handler import PickleDBHandler
 import os
-from funcions_not_only_for_routes import LoadConfig
+from funcions_not_only_for_routes import LoadConfig, WorkWithDBData
 from flask_login import LoginManager
 
 config_object = LoadConfig("config.txt")
@@ -14,6 +14,9 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 db_handler = PickleDBHandler("data.db")  # make object to easier work with PickleDB
+
+posts_worker = WorkWithDBData(db_handler)
+posts_worker.titles_and_num_of_posts()
 
 # find where is running this script
 current_dir = os.path.dirname(os.path.abspath(__file__))

@@ -5,6 +5,7 @@ from PIL import Image
 from datetime import datetime
 from password_and_user import users
 from flask_login import UserMixin
+from typing import Dict, Any, List
 
 
 def try_to_load_json(JSON,
@@ -113,3 +114,38 @@ def find_user(username):
     if username in users:
         return User(username)
     return None
+
+class WorkWithDBData: # use this to replace funcions under
+    def __init__(self, db_handler_instance: Any):
+        self.db_handler = db_handler_instance
+        #print(f"DB handler: {self.db_handler}")
+        self.db_list = []
+        self.updadate_db_list()
+        self.leght_of_db = len(self.db_list)
+
+    def updadate_db_list(self):
+        self.db_list = self.db_handler.get_all()
+
+    def get_all_records_data_as_list(self) -> List[Dict[str, Any]]:
+        all_pictures = self.db_handler.get_all()
+        data_records = []
+        for pic in all_pictures:
+            data_records.append(self.db_handler.get(pic))
+        return data_records
+    
+    def get_all_titles_of_all_records(self):
+        all_data_list = self.get_all_records_data_as_list()
+        titles = []
+        #print(all_data_list)
+        for data in all_data_list:
+            data = json.loads(data)
+            #print(f"------------ \n Data: {data} \n Text {data['text']} ------------")
+            titles.append(data["text"])
+        return titles  
+    def titles_and_num_of_posts(self):
+        list_of_articles_titles_with_their_num = []
+        for i, title in enumerate(self.get_all_titles_of_all_records()):
+            list_of_articles_titles_with_their_num.append({"title" : title, "number" : i})                
+            #print(f"{title} - {i}")
+        return(list_of_articles_titles_with_their_num)
+
